@@ -1,11 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { Randomerator } from './components/randomerator';
 
 export default function App() {
   return (
+    // JSX: Permite escrever codigo baseado em tags dentro do JavaSCript
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Randomerator/>
     </View>
   );
 }
