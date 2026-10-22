@@ -1,7 +1,31 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
-import Slider from '@react-native-community/slider'
+import { useState } from "react"
+import {Button, BUTTON_TYPE_DANGER, BUTTON_TYPE_SECONDARY, BUTTON_TYPE_SUCCESS} from "../button"
 
 export function Randomerator(){
+
+    // [0] = variavel
+    // [1] = função 
+
+    let [value, setValue] = useState(100)
+
+    function incrementar(){
+        setValue(value + 1)
+    }
+
+    function decrementar(){
+        setValue(value - 1)
+    }
+
+    function resetar(){
+        setValue(0)
+    }
+
+    function randomizar(){
+        const result = Math.floor((Math.random() * 100)) + 1
+        setValue(result)
+    }
+
     return (
         <View style={styles.container}>
 
@@ -9,33 +33,30 @@ export function Randomerator(){
 
             <View style={styles.content}>
 
-                <Text style={styles.result}>100</Text>
+                <Text style={styles.result}>{value}</Text>
 
-                <Text style={styles.textInterval}>1</Text>
-
-                <Slider
-                    style={styles.slider}
-                    minimumValue={1}
-                    maximumValue={100}
-                    thumbTintColor={"#00aeff"}
-                    minimumTrackTintColor={"#00aeff"}
-                    maximumTrackTintColor={"#ccc"}
+                <Button
+                    text="Incrementar"
+                    onClick={incrementar}
                 />
 
-                <Text style={styles.textInterval}>100</Text>
-
-                <Slider
-                    style={styles.slider}
-                    minimumValue={1}
-                    maximumValue={100}
-                    thumbTintColor={"#00aeff"}
-                    minimumTrackTintColor={"#00aeff"}
-                    maximumTrackTintColor={"#ccc"}
+                <Button
+                    type={BUTTON_TYPE_SECONDARY}
+                    text="Decrementar"
+                    onClick={decrementar}
                 />
 
-                <Pressable style={styles.buttonPrimary}>
-                    <Text style={styles.buttonText}>Generate</Text>
-                </Pressable>
+                <Button
+                    type={BUTTON_TYPE_DANGER}
+                    text="Zerar"
+                    onClick={resetar}
+                />
+
+                <Button
+                    type={BUTTON_TYPE_SUCCESS}
+                    text="Randomizar"
+                    onClick={randomizar}
+                />
 
             </View>
             
@@ -48,7 +69,9 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "flex-start",
         alignItems: "center",
-        gap: 32
+        gap: 16,
+        backgroundColor: "#939393",
+        padding: 16
     },
     title: {
         fontSize: 32,
@@ -58,7 +81,7 @@ const styles = StyleSheet.create({
     content:{
         backgroundColor: "#fff",
         padding: 12,
-        borderRadius: 8,
+        borderRadius: 12,
         width: "100%",
         justifyContent: "flex-start",
         alignItems: "center",
@@ -76,17 +99,6 @@ const styles = StyleSheet.create({
     slider:{
         height: 30,
         width: "100%"
-    },
-    buttonPrimary:{
-        backgroundColor: '#00aeff',
-        padding: 8,
-        borderRadius: 8,
-        width: "100%"
-    },
-    buttonText:{
-        color: "#fff",
-        textAlign: 'center',
-        fontSize: 24,
-        fontWeight: 'bold'
     }
+   
 })
