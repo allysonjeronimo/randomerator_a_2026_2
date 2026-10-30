@@ -14,8 +14,12 @@ export function Button({type = BUTTON_TYPE_PRIMARY, text, onClick}){
         [BUTTON_TYPE_DANGER] : styles.buttonDanger
     }
     
+    // ({pressed}) => [{}, {}]
     return (
-        <Pressable style={styleTypes[type]} onPress={onClick}>
+        <Pressable style={({pressed}) => [
+            styleTypes[type],
+            {opacity: pressed ? 0.5 : 1}
+        ]} onPress={onClick}>
             <Text style={styles.buttonText}>{text}</Text>
         </Pressable>
     )
