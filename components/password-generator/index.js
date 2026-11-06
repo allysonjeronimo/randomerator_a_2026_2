@@ -1,14 +1,25 @@
-import {View, Text, Image, StyleSheet} from "react-native"
+import {View, Text, Image, StyleSheet, Modal} from "react-native"
 import { Button} from "../button"
 import Slider from "@react-native-community/slider"
 import { useState } from "react"
+import PasswordModal from "../modal"
+
+const charset = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%&*()_+{}[]|:;<>,.?/~`-="
 
 export function PasswordGenerator(){
 
     const [size, setSize] = useState(20)
+    const [isModalVisible, setModalVisible] = useState(false)
+    const [password, setPassword] = useState("")
 
     function generate(){
-        console.log("Gerando a senha...")
+        let value = ""
+        for(let i = 0; i < size; i++){
+            let randomIndex = Math.floor(Math.random() * charset.length)
+            value += charset.charAt(randomIndex)
+        }
+        setPassword(value)
+        setModalVisible(true)
     }
 
     return (
@@ -18,13 +29,14 @@ export function PasswordGenerator(){
                 source={require("../../assets/logo.png")}
             />
             <View style={styles.content}>
+
                 <Text style={styles.title}>{size} Caracteres</Text>
                 
                 <Slider 
                     style={styles.slider}
                     thumbTintColor="#00aeff"
-                    minimumValue={6}
-                    maximumValue={20}
+                    minimumValue={4}
+                    maximumValue={12}
                     value={size}
                     onValueChange={(value) => setSize(value.toFixed(0))}
                     minimumTrackTintColor="#00aeff"
@@ -36,6 +48,12 @@ export function PasswordGenerator(){
                     onClick={generate}
                 />
             </View>
+
+
+            <Modal visible={isModalVisible} animationType="slide" transparent={true}>
+                <PasswordModal password={password} onClose={() => setModalVisible(false)}/>
+            </Modal>
+
         </View>
     )
 }
